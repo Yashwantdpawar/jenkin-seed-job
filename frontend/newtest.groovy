@@ -13,6 +13,7 @@ def jobDefinition(job)  {
                     git {
                         remote {
                             url('https://github.com/mhasif0786/jenkin-seed-job.git')
+                            credential('')
                             branch('master')
                         }
                     }
