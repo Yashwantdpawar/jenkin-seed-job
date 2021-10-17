@@ -1,0 +1,38 @@
+pipeline{
+    agent {
+        label any
+    }
+
+    options {
+        ansiColor('xterm')
+    }
+
+    stages {
+        stage('Creating_Jenkins_backup') {
+                steps {
+                    script {
+                        sh """
+                        echo 'tar $JENKINS_HOME directory'
+
+                        export AWS_ACCESS_KEY_ID=AKIAZQBENEDGKQWEYNYT
+                        export AWS_SECRET_ACCESS_KEY=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
+                        export AWS_DEFAULT_REGION=us-east-1
+                        timestamp="$(date +"%Y%m%d%H%M%S")"
+                        set +e
+                        tar -cf jenkins_backup_$timestamp.tar -C $JENKINS_HOME .
+                        exitcode=$?
+                        if [ "$exitcode" != "1" ] && [ "$exitcode" != "0" ]; then
+                        exit $exitcode
+                        fi
+                        set -e
+                        echo 'Upload jenkins_backup.tar to S3 bucket'
+                        /var/jenkins_home/bin/aws s3 cp jenkins_backup_$timestamp.tar s3://macmillan-jenkins-backup-sharedaccount/
+                        echo 'Remove files after succesful upload to S3'
+                        rm -rf *
+                        """
+                    }
+                }
+            }
+       }
+
+}
