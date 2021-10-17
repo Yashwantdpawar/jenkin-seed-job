@@ -14,8 +14,8 @@ pipeline{
                         sh """
                         echo 'tar $JENKINS_HOME directory'
 
-                        export AWS_ACCESS_KEY_ID=AKIAZQBENEDGKQWEYNYT
-                        export AWS_SECRET_ACCESS_KEY=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
+                        export AWS_ACCESS_KEY_ID=************************
+                        export AWS_SECRET_ACCESS_KEY=*********************
                         export AWS_DEFAULT_REGION=us-east-1
                         timestamp="$(date +"%Y%m%d%H%M%S")"
                         set +e
