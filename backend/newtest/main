@@ -1,0 +1,22 @@
+pipeline{
+    agent {
+        label any
+    }
+
+    options {
+        ansiColor('xterm')
+    }
+
+    stages {
+        stage('test') {
+                steps {
+                    script {
+                        sh """
+                        echo "hi asif "
+                        """
+                    }
+                }
+            }
+       }
+
+}
